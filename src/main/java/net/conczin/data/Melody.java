@@ -14,15 +14,6 @@ public record Melody(String name, List<Track> tracks) {
             Melody::new
     );
 
-
-    public int getLength() {
-        int length = 0;
-        for (Track track : tracks) {
-            length = Math.max(length, track.getLength());
-        }
-        return length;
-    }
-
     public record Track(String name, List<Note> notes) {
         public static final RecordCodec<Track> CODEC = RecordCodec.composite(
                 "Name", Codec.STRING, Track::name,
@@ -30,16 +21,9 @@ public record Melody(String name, List<Track> tracks) {
                 Track::new
         );
 
-
         @Override
         public List<Note> notes() {
             return Collections.unmodifiableList(notes);
-        }
-
-        public int getLength() {
-            if (notes.isEmpty()) return 0;
-            Note note = notes.getLast();
-            return note.time() + note.length();
         }
 
         public void setNotes(List<Note> notes) {
@@ -47,7 +31,6 @@ public record Melody(String name, List<Track> tracks) {
             this.notes.addAll(notes);
         }
     }
-
 
     public record Note(int note, int velocity, int time, int length) {
         public static final RecordCodec<Note> CODEC = RecordCodec.composite(

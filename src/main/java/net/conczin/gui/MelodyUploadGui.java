@@ -3,8 +3,8 @@ package net.conczin.gui;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.protocol.CustomPageLifetime;
-import com.hypixel.hytale.protocol.CustomUIEventBindingType;
+import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
+import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.ui.builder.EventData;
@@ -21,6 +21,8 @@ import net.conczin.utils.Utils;
 import javax.annotation.Nonnull;
 import java.io.InputStream;
 import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,9 +71,36 @@ public class MelodyUploadGui extends CodecDataInteractiveUIPage<MelodyUploadGui.
                 }
 
                 // Download and parse MIDI
-                InputStream in = new URI(data.url).toURL().openStream();
-                List<Melody.Track> tracks = MidiParser.parseMidi(in);
-                resource.add(uuid, new Melody(data.name, tracks));
+                String url = data.url.trim();
+                if (url.isEmpty()) {
+                    error("URL cannot be empty");
+                    return;
+                }
+
+                boolean isLocal = false;
+                URI uri;
+                if (url.startsWith("http://") || url.startsWith("https://")) {
+                    uri = new URI(url);
+                } else if (url.startsWith("file:")) {
+                    isLocal = true;
+                    uri = Paths.get(new URI(url)).toUri();
+                } else if (url.matches("^[a-zA-Z]:\\\\.*") || url.startsWith("\\\\") || url.startsWith("/") || url.matches("^[a-zA-Z]:/.*")) {
+                    isLocal = true;
+                    uri = Path.of(url).toUri();
+                } else {
+                    error("Unsupported URL scheme");
+                    return;
+                }
+
+                if (isLocal && !playerRef.getPacketHandler().isLocalConnection()) {
+                    error("Local file uploads are only allowed when connected locally");
+                    return;
+                }
+
+                try (InputStream in = uri.toURL().openStream()) {
+                    List<Melody.Track> tracks = MidiParser.parseMidi(in);
+                    resource.add(uuid, new Melody(data.name, tracks));
+                }
                 returnToSelection(ref, store, data.name);
             } catch (Exception e) {
                 error(e.getMessage());

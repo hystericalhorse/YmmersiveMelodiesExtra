@@ -9,9 +9,9 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.spatial.SpatialResource;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.protocol.InteractionType;
-import com.hypixel.hytale.protocol.PlaySoundEvent3D;
 import com.hypixel.hytale.protocol.Position;
 import com.hypixel.hytale.protocol.SoundCategory;
+import com.hypixel.hytale.protocol.packets.world.PlaySoundEvent3D;
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
@@ -143,7 +143,7 @@ public class MelodyPlaybackInteraction extends SimpleInteraction {
     public static void playSoundEvent3d(int soundEventIndex, float volume, float pitch, SoundCategory soundCategory, Vector3d position, ComponentAccessor<EntityStore> componentAccessor, long delay) {
         SoundEvent soundevent = SoundEvent.getAssetMap().getAsset(soundEventIndex);
         if (soundevent == null) return;
-        PlaySoundEvent3D playsoundevent3d = new PlaySoundEvent3D(soundEventIndex, soundCategory, new Position(position.x, position.y, position.z), volume, pitch);
+        PlaySoundEvent3D soundEvent = new PlaySoundEvent3D(soundEventIndex, soundCategory, new Position(position.x, position.y, position.z), volume, pitch);
         SpatialResource<Ref<EntityStore>, EntityStore> spatialresource = componentAccessor.getResource(
                 EntityModule.get().getPlayerSpatialResourceType()
         );
@@ -152,7 +152,7 @@ public class MelodyPlaybackInteraction extends SimpleInteraction {
         for (Ref<EntityStore> ref : list) {
             PlayerRef playerref = componentAccessor.getComponent(ref, PlayerRef.getComponentType());
             assert playerref != null;
-            executor.schedule(() -> playerref.getPacketHandler().write(playsoundevent3d), delay, TimeUnit.MILLISECONDS);
+            executor.schedule(() -> playerref.getPacketHandler().write(soundEvent), delay, TimeUnit.MILLISECONDS);
         }
     }
 }

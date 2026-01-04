@@ -3,8 +3,8 @@ package net.conczin.gui;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.protocol.CustomPageLifetime;
-import com.hypixel.hytale.protocol.CustomUIEventBindingType;
+import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
+import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.ui.Value;
 import com.hypixel.hytale.server.core.ui.builder.EventData;
@@ -28,7 +28,8 @@ public class MelodySelectionGui extends CodecDataInteractiveUIPage<MelodySelecti
     private static final Value<String> BUTTON_LABEL_STYLE = Value.ref("Pages/YmmersiveMelodies/MelodyButton.ui", "LabelStyle");
     private static final Value<String> BUTTON_LABEL_STYLE_SELECTED = Value.ref("Pages/YmmersiveMelodies/MelodyButton.ui", "SelectedLabelStyle");
 
-    private String instrument;
+    private final String instrument;
+
     private String selectedMelody;
     private String searchQuery = "";
 
@@ -51,7 +52,7 @@ public class MelodySelectionGui extends CodecDataInteractiveUIPage<MelodySelecti
 
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#Stop", EventData.of("Action", "Stop"));
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#Delete", EventData.of("Action", "Delete"));
-        eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#Tracks", EventData.of("Action", "Tracks"));
+        // eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#Tracks", EventData.of("Action", "Tracks"));
         eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#Upload", EventData.of("Action", "Upload"));
 
         this.buildList(ref, commandBuilder, eventBuilder);
@@ -94,7 +95,7 @@ public class MelodySelectionGui extends CodecDataInteractiveUIPage<MelodySelecti
         // Button states
         commandBuilder.set("#Stop.Disabled", selectedMelody.isEmpty());
         commandBuilder.set("#Delete.Disabled", selectedMelody.isEmpty() || !selectedMelody.startsWith(uuid + ":"));
-        commandBuilder.set("#Tracks.Disabled", selectedMelody.isEmpty());
+        // commandBuilder.set("#Tracks.Disabled", selectedMelody.isEmpty());
     }
 
     private static void addSeparator(UICommandBuilder commandBuilder, int rowIndex, String message) {

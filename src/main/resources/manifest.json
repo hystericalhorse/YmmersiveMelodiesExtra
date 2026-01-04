@@ -1,5 +1,5 @@
 {
-  "Group": "net.conczin",
+  "Group": "Conczin",
   "Name": "Ymmersive Melodies",
   "Version": "0.0.1",
   "Description": "Upload custom MIDIs and annoy your friends with immersive music!",
@@ -7,10 +7,10 @@
     {
       "Name": "Conczin",
       "Email": "conczin@gmail.com",
-      "Url": "conczin.net"
+      "Url": "https://conczin.net/"
     }
   ],
-  "Website": "conczin.net",
+  "Website": "https://conczin.net/",
   "Main": "net.conczin.YmmersiveMelodies",
   "ServerVersion": "*",
   "Dependencies": {},

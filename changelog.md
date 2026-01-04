@@ -6,4 +6,3 @@
 
 * Sync with neighboring players
 * Tracks selection
-* URI upload in case its local file
