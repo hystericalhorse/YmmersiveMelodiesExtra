@@ -19,15 +19,16 @@ public class YmmersiveMelodiesRegistry implements Resource<EntityStore> {
             )
             .append(
                     new KeyedCodec<>(
-                            "Melodies", // TODO Unmodifiable map codec by default!
+                            "Melodies",
                             new MapCodec<>(
-                                    new MapCodec<>(Melody.CODEC, HashMap::new),
-                                    HashMap::new
+                                    new MapCodec<>(Melody.CODEC, HashMap::new, false),
+                                    HashMap::new,
+                                    false
                             ),
                             true
                     ),
                     (o, map) -> {
-                        if (map != null) { // TODO KeyMapCodec
+                        if (map != null) {
                             map.forEach((k, v) ->
                                     o.melodies.put(UUID.fromString(k), new HashMap<>(v))
                             );

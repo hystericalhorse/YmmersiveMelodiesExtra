@@ -9,9 +9,9 @@ import com.hypixel.hytale.assetstore.map.JsonAssetWithMap;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class MelodyAsset implements JsonAssetWithMap<String, DefaultAssetMap<String, MelodyAsset>> {
@@ -36,10 +36,10 @@ public class MelodyAsset implements JsonAssetWithMap<String, DefaultAssetMap<Str
                     Path path = assetExtraInfo.getAssetPath();
                     if (path == null) return;
                     Path midiPath = path.getParent().resolve(path.getFileName().toString().replaceFirst("\\.json$", ".midi"));
-                    try {
-                        InputStream midiStream = new FileInputStream(midiPath.toFile());
+                    try (InputStream midiStream = Files.newInputStream(midiPath)) {
                         o.melody = new Melody(o.name, MidiParser.parseMidi(midiStream));
-                    } catch (FileNotFoundException e) {
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                         // Nop
                     }
                 }

@@ -106,7 +106,7 @@ public class MelodySelectionGui extends CodecDataInteractiveUIPage<MelodySelecti
     private List<Melody> filterAndSort(Map<String, Melody> melodies) {
         return melodies.entrySet().stream()
                 .filter(e -> this.searchQuery.isEmpty() || e.getValue().name().toLowerCase().contains(this.searchQuery) || e.getKey().toLowerCase().contains(this.searchQuery))
-                .sorted()
+                .sorted(Map.Entry.comparingByKey())
                 .map(Map.Entry::getValue)
                 .toList();
     }
