@@ -23,11 +23,11 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Sim
 import com.hypixel.hytale.server.core.modules.time.TimeResource;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import net.conczin.utils.Utils;
 
 import javax.annotation.Nonnull;
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -80,7 +80,7 @@ public class MelodyPlaybackInteraction extends SimpleInteraction {
 
         // TODO: Sync
 
-        // This should be tick rate + max jitter margin
+        // This should be the tick rate plus max jitter margin
         long buffer = 150L;
 
         // Get time
@@ -93,12 +93,15 @@ public class MelodyPlaybackInteraction extends SimpleInteraction {
         Melody melody;
         if (progress.melody.contains(":")) {
             YmmersiveMelodiesRegistry resource = store.getResource(YmmersiveMelodiesRegistry.getResourceType());
-            melody = resource.get(Utils.getUUID(ref), progress.melody.split(":", 2)[1]);
+            String[] split = progress.melody.split(":", 2);
+            melody = resource.get(UUID.fromString(split[0]), split[1]);
         } else {
             MelodyAsset asset = MelodyAsset.getAssetStore().getAssetMap().getAsset(progress.melody);
             if (asset == null) return;
             melody = asset.getMelody();
         }
+
+        if (melody == null) return;
 
         // Play notes
         for (Melody.Track track : melody.tracks()) {
