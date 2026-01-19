@@ -1,3 +1,7 @@
+# 1.0.4
+
+* Fixed flute recipe
+
 # 1.0.3
 
 * Replaced bronze with copper to allow crafting the items in vanilla
