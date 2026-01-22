@@ -79,10 +79,7 @@ public class MelodyPlaybackInteraction extends SimpleInteraction {
         if (itemInHand == null) return;
         MelodyProgress progress = itemInHand.getFromMetadataOrDefault("MelodyProgress", MelodyProgress.CODEC);
         if (progress.melody.isEmpty()) return;
-
-        // TODO: Sync
-        // SEE BELOW
-
+        
         // This should be the tick rate plus max jitter margin
         long buffer = 150L;
 
@@ -109,25 +106,26 @@ public class MelodyPlaybackInteraction extends SimpleInteraction {
                 EntityModule.get().getPlayerSpatialResourceType()
         );
         
-        // CHECK FOR NEARBY PLAYING MELODIES, GET OLDEST PLAYING MELODY, SET TIME ACCORDINGLY
+        // SYNC MELODY TIME ON PLAYBACK
+        // TODO: DESIGNATE "LEADER" INSTEAD OF DEFAULTING TO LONGEST PROGRESS.
         if (firstRun)
         {
         	List<Ref<EntityStore>> list = SpatialResource.getThreadLocalReferenceList();
-            spatialresource.getSpatialStructure().collect(position, 100.0f, list);
+            spatialresource.getSpatialStructure().collect(position, 100.0f, list); // TODO: TIE RESOURCE COLLECTION TO NON-FIXED RANGE.
             if (!list.isEmpty()) {
                 for (Ref<EntityStore> otherref : list) {
                     Player player = store.getComponent(otherref, Player.getComponentType());
                     if (player != null) {
-                    	Inventory inv = player.getInventory();
-                    	ItemStack otherHeldItem = inv.getItemInHand();
-                    	if (otherHeldItem == null)
-                    		continue;
-                    	MelodyProgress otherMelodyProgress = otherHeldItem.getFromMetadataOrNull("MelodyProgress", MelodyProgress.CODEC);
-                    	if (otherMelodyProgress == null || otherMelodyProgress.melody.isEmpty())
-                    		continue;
-                    	else if (progress.time <= otherMelodyProgress.time) {
-                			progress.time = otherMelodyProgress.time;
-                    	}
+                    		Inventory inv = player.getInventory();
+                    		ItemStack otherHeldItem = inv.getItemInHand();
+                    		if (otherHeldItem == null)
+                    			continue;
+                    		MelodyProgress otherMelodyProgress = otherHeldItem.getFromMetadataOrNull("MelodyProgress", MelodyProgress.CODEC);
+                    		if (otherMelodyProgress == null || otherMelodyProgress.melody.isEmpty())
+                    			continue;
+                    		else if (progress.time <= otherMelodyProgress.time) {
+                    			progress.time = otherMelodyProgress.time;
+                    		}
                     }
                 }
             }

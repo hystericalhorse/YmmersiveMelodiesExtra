@@ -32,6 +32,7 @@ public class MelodyAsset implements JsonAssetWithMap<String, DefaultAssetMap<Str
                     (item, parent) -> item.name = parent.name
             )            
             .add()
+            // TODO: IMPLEMENT SUPPORT FOR CHOICE TRIM
             // New JSON value which tells the parser to trim whitespace at the front of the MIDI.
             //.appendInherited(
         		//	new KeyedCodec<>("TrimMIDI", Codec.BOOLEAN),
@@ -45,11 +46,11 @@ public class MelodyAsset implements JsonAssetWithMap<String, DefaultAssetMap<Str
                     Path path = assetExtraInfo.getAssetPath();
                     if (path == null) return;
                     Path basePath = path.getParent().resolve(path.getFileName().toString().replaceFirst("\\.json$", ""));
+                    // CHECK FOR EXISTENCE OF .MIDI AND .MID FILES
                     List<Path> midiPaths = List.of(
                     			basePath.resolveSibling(basePath.getFileName().toString() + ".midi"),
                     			basePath.resolveSibling(basePath.getFileName().toString() + ".mid")
-                    		); // Support for both MIDI file extensions.
-                    //Path midiPath = path.getParent().resolve(path.getFileName().toString().replaceFirst("\\.json$", ".midi"));
+                    		);
                     IOException prevException = null;
                     for (Path midiPath : midiPaths) {
                     	try (InputStream midiStream = Files.newInputStream(midiPath)) {
