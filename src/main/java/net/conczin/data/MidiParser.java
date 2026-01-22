@@ -104,13 +104,14 @@ public class MidiParser {
         }
 
         // Find first note
-        int offset = Integer.MAX_VALUE;
-        for (Melody.Track track : tracks) {
-            List<Melody.Note> notes = track.notes();
-            if (!notes.isEmpty()) {
-                offset = Math.min(offset, notes.getFirst().time());
-            }
-        }
+        //int offset = Integer.MAX_VALUE;
+        //for (Melody.Track track : tracks) {
+        //    List<Melody.Note> notes = track.notes();
+        //    if (!notes.isEmpty()) {
+        //        offset = Math.min(offset, notes.getFirst().time());
+        //    }
+        //}
+        // ^^ Removed to test multiple part midi tracks.
 
         // And average velocity
         int totalVelocity = 0;
@@ -130,7 +131,7 @@ public class MidiParser {
                 newNotes.add(new Melody.Note(
                         note.note(),
                         (int) (note.velocity() / averageVelocity * 64),
-                        note.time() - offset,
+                        note.time(),// - offset, // << Removed to test multiple part midi tracks.
                         note.length()
                 ));
             }
