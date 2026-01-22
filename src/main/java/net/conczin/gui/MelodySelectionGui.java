@@ -71,7 +71,7 @@ public class MelodySelectionGui extends CodecDataInteractiveUIPage<MelodySelecti
 
         // Own melodies section
         if (!melodies.isEmpty()) {
-            addSeparator(commandBuilder, rowIndex, "customUI.melodySelection.separator.own");
+            addSeparator(commandBuilder, rowIndex, "server.customUI.melodySelection.separator.own");
             rowIndex++;
         }
         for (Melody melody : melodies) {
@@ -81,7 +81,7 @@ public class MelodySelectionGui extends CodecDataInteractiveUIPage<MelodySelecti
 
         // Public melodies section
         if (!ownMelodies.isEmpty()) {
-            addSeparator(commandBuilder, rowIndex, "customUI.melodySelection.separator.server");
+            addSeparator(commandBuilder, rowIndex, "server.customUI.melodySelection.separator.server");
             rowIndex++;
         }
         for (MelodyAsset value : MelodyAsset.getAssetStore().getAssetMap().getAssetMap().values()) {

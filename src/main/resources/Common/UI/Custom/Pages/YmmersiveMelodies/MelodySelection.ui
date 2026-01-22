@@ -8,7 +8,7 @@ $C.@Container {
     #Title {
         Group {
             $C.@Title {
-               @Text = %customUI.melodySelection.title;
+               @Text = %server.customUI.melodySelection.title;
             }
         }
     }
@@ -19,7 +19,7 @@ $C.@Container {
         $C.@TextField #SearchInput {
             @Anchor = (Left: 4, Bottom: 4);
 
-            PlaceholderText: %customUI.melodySelection.search;
+            PlaceholderText: %server.customUI.melodySelection.search;
             AutoFocus: true;
         }
 
@@ -34,7 +34,7 @@ $C.@Container {
             Anchor: (Top: 15);
 
             $C.@TextButton #Stop {
-                Text: %customUI.melodySelection.stop;
+                Text: %server.customUI.melodySelection.stop;
                 FlexWeight: 1;
             }
 
@@ -43,7 +43,7 @@ $C.@Container {
             }
 
             $C.@TextButton #Delete {
-                Text: %customUI.melodySelection.delete;
+                Text: %server.customUI.melodySelection.delete;
                 FlexWeight: 1;
             }
 
@@ -52,7 +52,7 @@ $C.@Container {
             }
 
             $C.@TextButton #Upload {
-                Text: %customUI.melodySelection.upload;
+                Text: %server.customUI.melodySelection.upload;
                 FlexWeight: 1;
             }
         }

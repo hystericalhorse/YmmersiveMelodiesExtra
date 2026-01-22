@@ -7,7 +7,7 @@ $C.@Container {
 
     #Title {
         $C.@Title {
-           @Text = %customUI.melodyUpload.title;
+           @Text = %server.customUI.melodyUpload.title;
         }
     }
 
@@ -15,20 +15,20 @@ $C.@Container {
         LayoutMode: Top;
 
         Label #Details {
-            Text: %customUI.melodyUpload.details;
+            Text: %server.customUI.melodyUpload.details;
             Padding: 6;
         }
 
         $C.@TextField #Name {
             @Anchor = (Left: 0, Top: 12);
 
-            PlaceholderText: %customUI.melodyUpload.name;
+            PlaceholderText: %server.customUI.melodyUpload.name;
         }
 
         $C.@TextField #Url {
             @Anchor = (Left: 0, Top: 12);
 
-            PlaceholderText: %customUI.melodyUpload.url;
+            PlaceholderText: %server.customUI.melodyUpload.url;
         }
 
         Group {
@@ -36,7 +36,7 @@ $C.@Container {
             Anchor: (Top: 15);
 
             $C.@SecondaryTextButton #Cancel {
-                Text: %customUI.melodySelection.cancel;
+                Text: %server.customUI.melodySelection.cancel;
                 FlexWeight: 1;
             }
 
@@ -45,7 +45,7 @@ $C.@Container {
             }
 
             $C.@TextButton #Upload {
-                Text: %customUI.melodySelection.upload;
+                Text: %server.customUI.melodySelection.upload;
                 FlexWeight: 1;
             }
         }

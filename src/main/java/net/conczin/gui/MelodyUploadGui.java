@@ -125,7 +125,7 @@ public class MelodyUploadGui extends CodecDataInteractiveUIPage<MelodyUploadGui.
 
     private void error(String error) {
         UICommandBuilder commandBuilder = new UICommandBuilder();
-        commandBuilder.set("#Details.Text", Message.translation("customUI.melodyUpload.error").param("message", error == null ? "Unknown" : error));
+        commandBuilder.set("#Details.Text", Message.translation("server.customUI.melodyUpload.error").param("message", error == null ? "Unknown" : error));
         commandBuilder.set("#Details.Style.TextColor", "#ff0000");
         this.sendUpdate(commandBuilder, new UIEventBuilder(), false);
     }
