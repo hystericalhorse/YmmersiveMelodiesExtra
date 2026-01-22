@@ -14,6 +14,8 @@ import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.protocol.packets.world.PlaySoundEvent3D;
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.Inventory;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
 import com.hypixel.hytale.server.core.modules.entity.EntityModule;
@@ -79,6 +81,7 @@ public class MelodyPlaybackInteraction extends SimpleInteraction {
         if (progress.melody.isEmpty()) return;
 
         // TODO: Sync
+        // SEE BELOW
 
         // This should be the tick rate plus max jitter margin
         long buffer = 150L;
@@ -102,6 +105,33 @@ public class MelodyPlaybackInteraction extends SimpleInteraction {
         }
 
         if (melody == null) return;
+        SpatialResource<Ref<EntityStore>, EntityStore> spatialresource = store.getResource(
+                EntityModule.get().getPlayerSpatialResourceType()
+        );
+        
+        // CHECK FOR NEARBY PLAYING MELODIES, GET OLDEST PLAYING MELODY, SET TIME ACCORDINGLY
+        if (firstRun)
+        {
+        	List<Ref<EntityStore>> list = SpatialResource.getThreadLocalReferenceList();
+            spatialresource.getSpatialStructure().collect(position, 100.0f, list);
+            if (!list.isEmpty()) {
+                for (Ref<EntityStore> otherref : list) {
+                    Player player = store.getComponent(otherref, Player.getComponentType());
+                    if (player != null) {
+                    	Inventory inv = player.getInventory();
+                    	ItemStack otherHeldItem = inv.getItemInHand();
+                    	if (otherHeldItem == null)
+                    		continue;
+                    	MelodyProgress otherMelodyProgress = otherHeldItem.getFromMetadataOrNull("MelodyProgress", MelodyProgress.CODEC);
+                    	if (otherMelodyProgress == null || otherMelodyProgress.melody.isEmpty())
+                    		continue;
+                    	else if (progress.time <= otherMelodyProgress.time) {
+                			progress.time = otherMelodyProgress.time;
+                    	}
+                    }
+                }
+            }
+        }
 
         // Play notes
         for (Melody.Track track : melody.tracks()) {
