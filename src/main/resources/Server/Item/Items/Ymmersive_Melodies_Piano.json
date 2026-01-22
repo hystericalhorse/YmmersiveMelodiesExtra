@@ -1,8 +1,8 @@
 {
   "Parent": "Template_Ymmersive_Melodies",
   "TranslationProperties": {
-    "Name": "items.Ymmersive_Melodies_Piano.name",
-    "Description": "items.Ymmersive_Melodies_Piano.description"
+    "Name": "server.items.Ymmersive_Melodies_Piano.name",
+    "Description": "server.items.Ymmersive_Melodies_Piano.description"
   },
   "Icon": "Icons/ItemsGenerated/Ymmersive_Melodies_Piano.png",
   "IconProperties": {

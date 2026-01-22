@@ -1,8 +1,8 @@
 {
   "Parent": "Template_Ymmersive_Melodies",
   "TranslationProperties": {
-    "Name": "items.Ymmersive_Melodies_Bagpipe.name",
-    "Description": "items.Ymmersive_Melodies_Bagpipe.description"
+    "Name": "server.items.Ymmersive_Melodies_Bagpipe.name",
+    "Description": "server.items.Ymmersive_Melodies_Bagpipe.description"
   },
   "Icon": "Icons/ItemsGenerated/Ymmersive_Melodies_Bagpipe.png",
   "IconProperties": {

@@ -1,8 +1,8 @@
 {
   "Parent": "Template_Ymmersive_Melodies",
   "TranslationProperties": {
-    "Name": "items.Ymmersive_Melodies_Tiny_Drum.name",
-    "Description": "items.Ymmersive_Melodies_Tiny_Drum.description"
+    "Name": "server.items.Ymmersive_Melodies_Tiny_Drum.name",
+    "Description": "server.items.Ymmersive_Melodies_Tiny_Drum.description"
   },
   "Icon": "Icons/ItemsGenerated/Ymmersive_Melodies_Tiny_Drum.png",
   "IconProperties": {

@@ -1,8 +1,8 @@
 {
   "Parent": "Template_Ymmersive_Melodies",
   "TranslationProperties": {
-    "Name": "items.Ymmersive_Melodies_Didgeridoo.name",
-    "Description": "items.Ymmersive_Melodies_Didgeridoo.description"
+    "Name": "server.items.Ymmersive_Melodies_Didgeridoo.name",
+    "Description": "server.items.Ymmersive_Melodies_Didgeridoo.description"
   },
   "Icon": "Icons/ItemsGenerated/Ymmersive_Melodies_Didgeridoo.png",
   "IconProperties": {
